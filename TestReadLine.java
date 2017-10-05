@@ -7,10 +7,11 @@ class TestReadLine {
         try {
         	in.setRaw();
             str = in.readLine();
-            in.unsetRaw();
+            
         } catch(IOException e) {
             e.printStackTrace();
         }
+        in.unsetRaw();
         System.out.println("\nline is: " + str);
     }
 }
