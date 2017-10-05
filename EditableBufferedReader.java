@@ -34,10 +34,21 @@ class EditableBufferedReader extends BufferedReader{
 	
 	public int read() throws IOException{
 		int r = super.read();
-		while(r == 27 || r == 91){
+		while(r == 27 || r == 91 || r == 79){
 
 			r = super.read();
+			
 			switch(r){
+				case 50:
+
+					System.out.println("Insert");
+
+					break;
+				case 51:
+
+					System.out.println("Suprimir");
+
+					break;
 				case 65:
 					
 					System.out.println("Arriba");
@@ -57,6 +68,16 @@ class EditableBufferedReader extends BufferedReader{
 					
 					System.out.println("Izquierda");
 					
+					break;
+				case 70:
+
+					System.out.println("Fin");
+
+					break;
+				case 72:
+					
+					System.out.println("Inicio");
+
 					break;
 			}
 		}
