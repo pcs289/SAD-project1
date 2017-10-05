@@ -1,0 +1,8 @@
+^[[A --> up
+^[[B --> down
+^[[C --> right
+^[[D --> left
+^[[3~ --> suprimir
+^[OH --> inicio
+^[OF --> fin
+^[[2~ --> insert
