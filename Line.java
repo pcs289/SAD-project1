@@ -7,13 +7,41 @@ class Line{
 
 	public void addCharacter(char a){
 		this.c.add(a);
+		
 		this.printLine();
+	}
+
+	public void especialChar(int i){
+
+		switch(i){
+				case Global.INSERT:
+				break;
+				case Global.SUPRIMIR:
+				break;
+				case Global.UP:
+				break;
+				case Global.DOWN:
+				break;
+				case Global.RIGHT:
+				System.out.print(String.format("\033[1C"));
+				break;
+				case Global.LEFT:
+				System.out.print(String.format("\033[1D"));
+				break;
+				case Global.START:
+				System.out.print(String.format("\033[%dD", this.c.size()));
+				break;
+				case Global.END:
+				break;
+				default:
+				break;
+			}
 	}
 
 	public void clearScreen(){
 		
-		System.out.print(String.format("\033[2J"));
-		System.out.print(String.format("\033[0;0f"));
+		System.out.print(String.format("\033[%dD", this.c.size()));
+		System.out.print(String.format("\033[K"));
 	}
 
 	public void printLine(){
