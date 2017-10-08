@@ -85,7 +85,7 @@ class EditableBufferedReader extends BufferedReader{
 		this.setRaw();
 		int r = this.read();
 		while(r != 13){
-			if (r >= Global.INSERT){
+			if (r >= Global.INSERT || r == 127){
 				this.line.especialChar(r);
 			}else{
 				this.line.addCharacter((char) r);

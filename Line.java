@@ -7,7 +7,7 @@ class Line{
 	int cursorPosition = 0;
 
 	public int getCursorPosition(){
-		return cursorPosition;
+		return this.cursorPosition;
 	}
 
 	public void addCharacter(char a){
@@ -24,9 +24,8 @@ class Line{
 		}
 
 		this.c = aux;
-		this.cursorPosition += 1;
-		System.out.print(String.format("\033[%dC", 1));
 		this.printLine();
+		this.updateCursorPosition(Global.RIGHT);
 		
 	}
 
@@ -47,7 +46,12 @@ class Line{
 	public void removeCharacter(boolean isDelete){
 		ArrayList<Character> aux = new ArrayList<Character>();
 		if(isDelete){
-
+			for(int i = 0; i < this.cursorPosition; i++){
+				aux.add(this.c.get(i));
+			}
+			for(int i = this.cursorPosition + 1; i < this.c.size(); i++){
+				aux.add(this.c.get(i));
+			}
 		}else{//isSuprimir
 			if(this.cursorPosition < this.c.size()){
 
@@ -90,6 +94,9 @@ class Line{
 				case Global.END:
 				System.out.print(String.format("\033[%dC", this.c.size()-1));
 				this.cursorPosition = this.c.size();
+				break;
+				case Global.DELETE:
+				this.removeCharacter(true);
 				break;
 				default:
 				break;
