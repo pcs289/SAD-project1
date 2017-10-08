@@ -45,12 +45,10 @@ class EditableBufferedReader extends BufferedReader{
 			switch(r){
 				case 50:
 
-					
 					r = Global.INSERT;
 					break;
 				case 51:
 
-					
 					r = Global.SUPRIMIR;
 					break;
 				case 65:
@@ -59,29 +57,24 @@ class EditableBufferedReader extends BufferedReader{
 					r = Global.UP;
 					break;
 				case 66:
+
 					r = Global.DOWN;
-					
-					
 					break;
 				case 67:
+					
 					r = Global.RIGHT;
-					
-					
 					break;
 				case 68:
+					
 					r = Global.LEFT;
-					
-					
 					break;
 				case 70:
-					r = Global.END;
 					
-
+					r = Global.END;
 					break;
 				case 72:
-					r = Global.START;
 					
-
+					r = Global.START;
 					break;
 			}
 		}
@@ -99,7 +92,8 @@ class EditableBufferedReader extends BufferedReader{
 			}
 			r = this.read();
 		}
-		String s = String.format("%d", r);
+
+		String s = String.valueOf(this.line.getCursorPosition());
 		this.unsetRaw();
 		return s;
 	}

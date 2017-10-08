@@ -6,22 +6,28 @@ class Line{
 	ArrayList<Character> c = new ArrayList<Character>();
 	int cursorPosition = 0;
 
+	public int getCursorPosition(){
+		return cursorPosition;
+	}
+
 	public void addCharacter(char a){
 		ArrayList<Character> aux = new ArrayList<Character>();
+
 		if(this.cursorPosition > 0){
 			for(int i = 0; i < this.cursorPosition; i++){
 				aux.add(this.c.get(i));
 			}
-		}
+		} 
 		aux.add(a);
 		for(int i = this.cursorPosition; i < this.c.size(); i++){
 			aux.add(this.c.get(i));
 		}
 
 		this.c = aux;
-		this.updateCursorPosition(Global.RIGHT);
+		this.cursorPosition += 1;
+		System.out.print(String.format("\033[%dC", 1));
 		this.printLine();
-		//System.out.print(String.format("\033[1C"));
+		
 	}
 
 	public void updateCursorPosition(int cas){
@@ -72,21 +78,18 @@ class Line{
 				case Global.DOWN:
 				break;
 				case Global.RIGHT:
-				
 				this.updateCursorPosition(Global.RIGHT);
-				
-				
 				break;
 				case Global.LEFT:
-				
 				this.updateCursorPosition(Global.LEFT);
-				
 				break;
 				case Global.START:
 				System.out.print(String.format("\033[%dD", this.cursorPosition));
 				this.cursorPosition = 0;
 				break;
 				case Global.END:
+				System.out.print(String.format("\033[%dC", this.c.size()-1));
+				this.cursorPosition = this.c.size();
 				break;
 				default:
 				break;
@@ -95,11 +98,10 @@ class Line{
 
 	//Indica l'index del cursor respecte el array de caracters
 	public int indexOfCursor(){
-		return this.c.size() -1 - this.cursorPosition;
+		return this.c.size() - this.cursorPosition;
 	}
 
-	public void clearScreen(){
-		
+	public void clearScreen(){		
 		System.out.print(String.format("\033[%dD", this.c.size()));
 		System.out.print(String.format("\033[K"));
 	}
