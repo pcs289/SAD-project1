@@ -46,12 +46,15 @@ class Line{
 	public void removeCharacter(boolean isDelete){
 		ArrayList<Character> aux = new ArrayList<Character>();
 		if(isDelete){
-			for(int i = 0; i < this.cursorPosition; i++){
+			
+			for(int i = 0; i < this.cursorPosition - 1; i++){
 				aux.add(this.c.get(i));
 			}
 			for(int i = this.cursorPosition + 1; i < this.c.size(); i++){
 				aux.add(this.c.get(i));
 			}
+			this.updateCursorPosition(Global.LEFT);
+			
 		}else{//isSuprimir
 			if(this.cursorPosition < this.c.size()){
 
@@ -65,8 +68,24 @@ class Line{
 		}
 		
 		this.c = aux;
-
 		this.printLine();
+	}
+
+	//Indica l'index del cursor respecte el array de caracters
+	public int indexOfCursor(){
+		return this.c.size() - this.cursorPosition;
+	}
+
+	public void clearScreen(){		
+		System.out.print(String.format("\033[%dD", this.c.size()));
+		System.out.print(String.format("\033[K"));
+	}
+
+	public void printLine(){
+		String s = this.getStringRepresentation(this.c);
+		this.clearScreen();
+		System.out.print(s);
+		System.out.print(String.format("\033[%dD", this.indexOfCursor()));
 	}
 
 	public void especialChar(int i){
@@ -101,23 +120,6 @@ class Line{
 				default:
 				break;
 			}
-	}
-
-	//Indica l'index del cursor respecte el array de caracters
-	public int indexOfCursor(){
-		return this.c.size() - this.cursorPosition;
-	}
-
-	public void clearScreen(){		
-		System.out.print(String.format("\033[%dD", this.c.size()));
-		System.out.print(String.format("\033[K"));
-	}
-
-	public void printLine(){
-		String s = this.getStringRepresentation(this.c);
-		this.clearScreen();
-		System.out.print(s);
-		System.out.print(String.format("\033[%dD", this.indexOfCursor()));
 	}
 
 	String getStringRepresentation(ArrayList<Character> list){    
