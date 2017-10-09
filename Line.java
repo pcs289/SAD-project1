@@ -5,28 +5,35 @@ class Line{
 	
 	ArrayList<Character> c = new ArrayList<Character>();
 	int cursorPosition = 0;
+	boolean isInsert = false;
 
 	public int getCursorPosition(){
 		return this.cursorPosition;
 	}
 
 	public void addCharacter(char a){
-		ArrayList<Character> aux = new ArrayList<Character>();
+		
+		if(isInsert && (this.cursorPosition < this.c.size()-1)){
+			this.c.set(this.cursorPosition, a);
+			
+		} else {
 
-		if(this.cursorPosition > 0){
-			for(int i = 0; i < this.cursorPosition; i++){
+			ArrayList<Character> aux = new ArrayList<Character>();
+			if(this.cursorPosition > 0){
+				for(int i = 0; i < this.cursorPosition; i++){
+					aux.add(this.c.get(i));
+				}
+			} 
+			aux.add(a);
+			for(int i = this.cursorPosition; i < this.c.size(); i++){
 				aux.add(this.c.get(i));
 			}
-		} 
-		aux.add(a);
-		for(int i = this.cursorPosition; i < this.c.size(); i++){
-			aux.add(this.c.get(i));
+			this.c = aux;
 		}
-
-		this.c = aux;
+		
 		this.printLine();
 		this.updateCursorPosition(Global.RIGHT);
-		
+
 	}
 
 	public void updateCursorPosition(int cas){
@@ -46,7 +53,7 @@ class Line{
 	public void removeCharacter(boolean isDelete){
 		ArrayList<Character> aux = new ArrayList<Character>();
 		if(isDelete){
-			
+		
 			for(int i = 0; i < this.cursorPosition - 1; i++){
 				aux.add(this.c.get(i));
 			}
@@ -58,14 +65,15 @@ class Line{
 		}else{//isSuprimir
 			if(this.cursorPosition < this.c.size()){
 
-				for(int i = 0; i < this.cursorPosition - 1; i++){
+				for(int i = 0; i < this.cursorPosition; i++){
 					aux.add(this.c.get(i));
 				}
-				for(int j = this.cursorPosition; j < this.c.size(); j++){
+				for(int j = this.cursorPosition+1; j < this.c.size(); j++){
 					aux.add(this.c.get(j));
 				}
 			}
-		}
+
+		}	
 		
 		this.c = aux;
 		this.printLine();
@@ -92,6 +100,7 @@ class Line{
 
 		switch(i){
 				case Global.INSERT:
+				this.isInsert = !this.isInsert;
 				break;
 				case Global.SUPRIMIR:
 				this.removeCharacter(false);

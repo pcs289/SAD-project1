@@ -44,15 +44,16 @@ class EditableBufferedReader extends BufferedReader{
 			
 			switch(r){
 				case 50:
-
-					r = Global.INSERT;
+					if(super.read()==126){
+						r = Global.INSERT;
+					}
 					break;
 				case 51:
-
-					r = Global.SUPRIMIR;
+					if(super.read()==126){
+						r = Global.SUPRIMIR;
+					}
 					break;
 				case 65:
-					
 					
 					r = Global.UP;
 					break;
