@@ -57,13 +57,13 @@ class Line{
 			for(int i = 0; i < this.cursorPosition - 1; i++){
 				aux.add(this.c.get(i));
 			}
-			for(int i = this.cursorPosition + 1; i < this.c.size(); i++){
+			for(int i = this.cursorPosition; i < this.c.size(); i++){
 				aux.add(this.c.get(i));
 			}
 			this.updateCursorPosition(Global.LEFT);
 			
 		}else{//isSuprimir
-			if(this.cursorPosition < this.c.size()){
+			//if(this.cursorPosition < this.c.size()){
 
 				for(int i = 0; i < this.cursorPosition; i++){
 					aux.add(this.c.get(i));
@@ -71,7 +71,7 @@ class Line{
 				for(int j = this.cursorPosition+1; j < this.c.size(); j++){
 					aux.add(this.c.get(j));
 				}
-			}
+			//}
 
 		}	
 		
@@ -91,9 +91,12 @@ class Line{
 
 	public void printLine(){
 		String s = this.getStringRepresentation(this.c);
+		System.out.print(String.format("\033[s"));
 		this.clearScreen();
 		System.out.print(s);
-		System.out.print(String.format("\033[%dD", this.indexOfCursor()));
+		System.out.print(String.format("\033[u"));
+		//this.updateCursorPosition(Global.RIGHT);
+		//System.out.print(String.format("\033[%dD", this.indexOfCursor()));
 	}
 
 	public void especialChar(int i){
@@ -104,6 +107,9 @@ class Line{
 				break;
 				case Global.SUPRIMIR:
 				this.removeCharacter(false);
+				break;
+				case Global.DELETE:
+				this.removeCharacter(true);
 				break;
 				case Global.UP:
 				break;
@@ -122,9 +128,6 @@ class Line{
 				case Global.END:
 				System.out.print(String.format("\033[%dC", this.c.size()-1));
 				this.cursorPosition = this.c.size();
-				break;
-				case Global.DELETE:
-				this.removeCharacter(true);
 				break;
 				default:
 				break;
