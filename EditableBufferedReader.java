@@ -3,10 +3,7 @@ import java.io.*;
 class EditableBufferedReader extends BufferedReader{
 	
 	Reader in;
-
 	Line line;
-
-	
 
 	public EditableBufferedReader(Reader in) {
 		super(in);
@@ -30,6 +27,7 @@ class EditableBufferedReader extends BufferedReader{
 
 			String[] args = new String[] {"/bin/bash", "-c", "stty echo cooked </dev/tty"};
 			Process proc = new ProcessBuilder(args).start();
+
 		
 		}catch(IOException e){
 			e.printStackTrace();
@@ -94,7 +92,7 @@ class EditableBufferedReader extends BufferedReader{
 			r = this.read();
 		}
 
-		String s = String.valueOf(this.line.getCursorPosition());
+		String s = this.line.getLineString();
 		this.unsetRaw();
 		return s;
 	}

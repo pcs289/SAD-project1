@@ -11,7 +11,9 @@ class TestReadLine {
         } catch(IOException e) {
             e.printStackTrace();
         }
-        System.out.println("\nCursor position is: " + str);
+        
+        System.out.println("\nString is: " + str);
+
         
     }
 }

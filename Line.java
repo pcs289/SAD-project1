@@ -37,21 +37,35 @@ class Line{
 	}
 
 	public void updateCursorPosition(int cas){
+
 		if(cas == Global.LEFT){
+
 			if(this.cursorPosition > 0){
 				this.cursorPosition -= 1;
 				System.out.print(String.format("\033[1D"));
 			}
 		}else if(cas == Global.RIGHT){
+
 			if(this.cursorPosition < this.c.size()){
 				this.cursorPosition += 1;
 				System.out.print(String.format("\033[1C"));
 			}
+		}else if(cas == Global.START){
+
+			System.out.print(String.format("\033[%dD", this.cursorPosition));
+			this.cursorPosition = 0;
+
+		}else if(cas == Global.END){
+
+			System.out.print(String.format("\033[%dC", this.indexOfCursor()));
+			this.cursorPosition = this.c.size();
 		}
 	}
 
 	public void removeCharacter(boolean isDelete){
+
 		ArrayList<Character> aux = new ArrayList<Character>();
+
 		if(isDelete){
 		
 			for(int i = 0; i < this.cursorPosition - 1; i++){
@@ -63,7 +77,6 @@ class Line{
 			this.updateCursorPosition(Global.LEFT);
 			
 		}else{//isSuprimir
-			//if(this.cursorPosition < this.c.size()){
 
 				for(int i = 0; i < this.cursorPosition; i++){
 					aux.add(this.c.get(i));
@@ -71,7 +84,6 @@ class Line{
 				for(int j = this.cursorPosition+1; j < this.c.size(); j++){
 					aux.add(this.c.get(j));
 				}
-			//}
 
 		}	
 		
@@ -95,8 +107,6 @@ class Line{
 		this.clearScreen();
 		System.out.print(s);
 		System.out.print(String.format("\033[u"));
-		//this.updateCursorPosition(Global.RIGHT);
-		//System.out.print(String.format("\033[%dD", this.indexOfCursor()));
 	}
 
 	public void especialChar(int i){
@@ -122,12 +132,14 @@ class Line{
 				this.updateCursorPosition(Global.LEFT);
 				break;
 				case Global.START:
-				System.out.print(String.format("\033[%dD", this.cursorPosition));
-				this.cursorPosition = 0;
+				this.updateCursorPosition(Global.START);
+				//System.out.print(String.format("\033[%dD", this.cursorPosition));
+				//this.cursorPosition = 0;
 				break;
 				case Global.END:
-				System.out.print(String.format("\033[%dC", this.c.size()-1));
-				this.cursorPosition = this.c.size();
+				this.updateCursorPosition(Global.END);
+				//System.out.print(String.format("\033[%dC", this.c.size()));
+				//this.cursorPosition = this.c.size();
 				break;
 				default:
 				break;
@@ -141,5 +153,9 @@ class Line{
 	        builder.append(ch);
 	    }
 	    return builder.toString();
+	}
+
+	String getLineString(){
+		return this.getStringRepresentation(this.c);
 	}
 }
