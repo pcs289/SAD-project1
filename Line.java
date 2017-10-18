@@ -13,7 +13,8 @@ class Line{
 
 	public void addCharacter(char a){
 		
-		if(isInsert && (this.cursorPosition < this.c.size()-1)){
+		if(isInsert && (this.cursorPosition < this.c.size())){
+			
 			this.c.set(this.cursorPosition, a);
 			
 		} else {
