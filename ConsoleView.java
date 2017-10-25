@@ -1,8 +1,8 @@
 import java.io.*;
 import java.util.*;
-import java.lang.*;
+import java.lang.*;	
 
-class ConsoleView extends Observer{
+class ConsoleView implements Observer{
 
 	LineModel line;
 	int lastCursorPosition = 0;
@@ -29,8 +29,9 @@ class ConsoleView extends Observer{
 		}
 	}
 
-	void update(LineModel li, Object arg){
-		this.line = li;
+	@Override
+	public void update(Observable li, Object arg){
+		this.line = (LineModel) li;
 		this.printLine();
 		this.updateCursorPosition();
 
