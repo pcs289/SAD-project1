@@ -46,7 +46,7 @@ class ConsoleView implements Observer{
 	}
 
 	public void clearScreen(){		
-		System.out.print(String.format("\033[%dD", this.line.c.size()));
+		System.out.print(String.format("\033[%dD", this.line.c.size()+1));
 		System.out.print(String.format("\033[K"));
 	}
 
@@ -61,8 +61,10 @@ class ConsoleView implements Observer{
 
 	public void updateCursorPosition(){
 
-		int resta;
+		int resta, indexOfCursor;
+
 		resta = this.line.cursorPosition - this.lastCursorPosition;
+		indexOfCursor = this.line.c.size() - this.lastCursorPosition;
 
 		if(resta < 0 && Math.abs(resta) == 1){
 			System.out.print(String.format("\033[1D"));
@@ -71,10 +73,10 @@ class ConsoleView implements Observer{
 			System.out.print(String.format("\033[1C"));
 			
 		}else if(resta < 0){
-			System.out.print(String.format("\033[%dD", this.line.cursorPosition));
+			System.out.print(String.format("\033[%dD", this.lastCursorPosition));
 			
 		}else if(resta > 0){
-			System.out.print(String.format("\033[%dC", this.line.indexOfCursor()));
+			System.out.print(String.format("\033[%dC", indexOfCursor));
 		}
 
 		this.lastCursorPosition = this.line.cursorPosition;
